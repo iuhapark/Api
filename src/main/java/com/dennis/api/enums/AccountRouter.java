@@ -4,6 +4,17 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 
 public enum AccountRouter {
+    EXIT("x",sc -> {
+        return false;
+    }),
+    CREATEACCOUNT("touch",sc->{
+        return true;
+    }),
+    DELETEACCOUNT("rm",sc->{
+        return true;
+    }),
+
+
     ;
     private final String name;
     private final Predicate<Scanner> predicate;

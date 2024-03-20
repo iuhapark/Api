@@ -1,34 +1,21 @@
 package com.dennis.api.user;
 
 import com.dennis.api.enums.Messenger;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
+@RequiredArgsConstructor
 public class UserRepository {
-    private static UserRepository instance;
     private PreparedStatement pstmt;
-
-    static {
-        try {
-            instance = new UserRepository();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private Connection connection;
-    public static UserRepository getInstance(){return instance;}
-    public UserRepository() throws SQLException {
-        connection = DriverManager.getConnection( // 다른 메소드에 있는 것을 연결할 때는 상단으로 빼준다.
-                "jdbc:mysql://localhost:3306/dennisdb",
-                "root",
-                "rootroot");
-    }
-    public String test(){
-        return "UserRepositoy connected.";
-    }
 
     public List<User> findUsers() throws SQLException {
         String sql = "SELECT * FROM user";
@@ -67,7 +54,7 @@ public class UserRepository {
                 "  CONSTRAINT user_pk PRIMARY KEY(id)\n" +
                 ");";
         pstmt = connection.prepareStatement(sql);
-        return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS: Messenger.FAIL;
+        return (pstmt.executeUpdate() == 0) ? Messenger.SUCCESS : Messenger.FAIL;
     }
 
     public String deleteTable() throws SQLException {

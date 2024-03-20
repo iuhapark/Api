@@ -1,43 +1,37 @@
 package com.dennis.api.user;
 
 import com.dennis.api.enums.Messenger;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
+@CrossOrigin(origins =  "http://localhost:3000")
+@RestController
+@RequiredArgsConstructor
 public class UserController {
-    private static UserController instance = new UserController();
+    private final UserService service;
 
-    public static UserController getInstance() {
-        return instance;
+    @PostMapping("/login")
+    public Map<String,?> username(@RequestBody Map<?,?> paraMap) {
+        String username = (String)paraMap.get("username");
+        System.out.println("리퀘스트가 가져온 아이디: "+username);
+        Map<String,String> map = new HashMap<>();
+        map.put("username","환영합니다 "+username);
+        return map;
     }
-
     UserServiceImpl user;
     UserRepository repo;
-    UserController(){
-        this.user = UserServiceImpl.getInstance();
-        this.repo = UserRepository.getInstance();
+
+    public List<?> findUsers() throws SQLException {
+        return repo.findUsers();
     }
 
-    public List<?> findUsers() throws SQLException {return repo.findUsers();}
 
-
-    public String save(Scanner sc) {
+    public Map<String,?> save(@RequestBody Map<?,?> paraMap) {
         System.out.println("Please enter Username, Password, Name, Phone Number, Address, Job, Height, Weight.");
-        user.save(User.builder()
-                .username(sc.next())
-                .password(sc.next())
-                .name(sc.next())
-                .phoneNumber(sc.next())
-                .addressId(sc.next())
-                .job(sc.next())
-                .height(sc.nextDouble())
-                .weight(sc.nextDouble())
-                .build());
-        return "Thanks for signing up. Your account has been created." ;
+        return null;
     }
 
     public String addUsers() {
@@ -45,46 +39,36 @@ public class UserController {
     }
 
     public String count() {
-        return user.count();
+        return null;
     }
 
     public Map userList() {
-        return user.userList();
+        return null;
     }
 
-    public String login(Scanner sc) {
+    public Map<String,?> login(@RequestBody Map<?,?> paraMap) {
         System.out.println("Please enter Username, password.");
-        return user.login(User.builder()
-                .username(sc.next())
-                .password(sc.next())
-                .build());
+        return null;
     }
 
-    public String updatePassword(Scanner sc) {
-        return user.updatePassword(User.builder()
-                .username(sc.next())
-                .password(sc.next())
-                .build());
+    public Map<String,?> updatePassword(@RequestBody Map<?,?> paraMap) {
+        return null;
     }
 
-    public String deleteAccount(Scanner sc) {
+    public Map<String,?> deleteAccount(@RequestBody Map<?,?> paraMap) {
         System.out.println("삭제할 계정의 아이디, 비밀번호를 입력해 주세요.");
-        user.delete(User.builder()
-                .username(sc.next())
-                .password(sc.next())
-                .build());
-        return "계정이 삭제되었습니다.";
+        return null;
     }
 
-    public Optional<User> getOne(Scanner sc) {return user.getOne(sc.next());
+    public Map<String,?> getOne(@RequestBody Map<?,?> paraMap) {
+        return null;
     }
 
     public Messenger createTable() throws SQLException {
-        return user.createTable();
+        return null;
     }
 
     public String deleteTable() throws SQLException {
-        return user.deleteTable();
+        return null;
     }
-
 }

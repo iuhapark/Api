@@ -1,6 +1,5 @@
 package com.dennis.api.user;
 
-import com.dennis.api.common.AbstractService;
 import com.dennis.api.common.UtilService;
 import com.dennis.api.common.UtilServiceImpl;
 import com.dennis.api.enums.Messenger;
@@ -9,18 +8,9 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserServiceImpl extends AbstractService<User> implements UserService {
-    private static UserServiceImpl instance = new UserServiceImpl();
+public class UserServiceImpl {
     Map<String, User> users;
     UserRepository repo;
-
-    public UserServiceImpl() {
-        this.repo = UserRepository.getInstance();
-        this.users = new HashMap<>();
-    }
-    public static UserServiceImpl getInstance() {
-        return instance;
-    }
 
     public String addUsers() {
         UtilService util = UtilServiceImpl.getInstance();
@@ -37,7 +27,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         users = map;
         return "addusers 결과 : " + users + "개 더미값 추가";
     }
-    @Override
+
+/*    @Override
     public User findUserById(Scanner sc) {
         System.out.println("찾을 계정의 아이디를 입력하세요.");
         String userId = sc.next();
@@ -49,6 +40,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         }
         return user;
     }
+
     @Override
     public Messenger save(User user) {
         users.put(user.getUsername(), user);
@@ -71,7 +63,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public String count() {
-        return users.size()+"";
+        return users.size() + "";
     }
 
     @Override
@@ -155,5 +147,5 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     @Override
     public String deleteTable() throws SQLException {
         return repo.deleteTable();
-    }
+    }*/
 }
